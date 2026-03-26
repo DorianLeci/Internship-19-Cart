@@ -8,8 +8,10 @@ import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/c
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { seconds, ThrottlerModule } from '@nestjs/throttler';
+import { UsersModule } from '@users/users.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { UsersController } from './modules/users/users.controller';
 import { PrismaModule } from './prisma/prisma.module';
 import { PrismaService } from './prisma/prisma.service';
 
@@ -17,6 +19,7 @@ import { PrismaService } from './prisma/prisma.service';
   imports: [
     PrismaModule,
     AuthModule,
+    UsersModule,
     ConfigModule.forRoot({
       isGlobal: true,
       load: [configuration],
@@ -30,7 +33,7 @@ import { PrismaService } from './prisma/prisma.service';
       ],
     }),
   ],
-  controllers: [AppController],
+  controllers: [AppController, UsersController],
   providers: [
     AppService,
     PrismaService,

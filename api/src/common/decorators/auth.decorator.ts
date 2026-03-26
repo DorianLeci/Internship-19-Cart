@@ -4,7 +4,7 @@ import { ApiBearerAuth, ApiForbiddenResponse, ApiUnauthorizedResponse } from '@n
 import { RolesGuard } from '../guards/roles.guard';
 import { Roles } from './roles.decorator';
 
-export function AuthRoles(...roles: string[]) {
+export function RolesAuth(...roles: string[]) {
   return applyDecorators(
     Roles(...roles),
     UseGuards(AuthGuard('jwt'), RolesGuard),

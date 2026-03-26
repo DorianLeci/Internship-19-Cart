@@ -4,6 +4,7 @@ import { BadRequestException, ValidationError, ValidationPipe } from '@nestjs/co
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { TrimPipe } from '@pipes/trim.pipe';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
 
@@ -23,6 +24,7 @@ async function bootstrap() {
   app.use(helmet());
 
   app.useGlobalPipes(
+    new TrimPipe(),
     new ValidationPipe({
       whitelist: true,
 
@@ -35,6 +37,7 @@ async function bootstrap() {
       },
     }),
   );
+
   app.useGlobalInterceptors(app.get(ResponseInterceptor));
   app.useGlobalFilters(new AllExceptionsFilter());
 

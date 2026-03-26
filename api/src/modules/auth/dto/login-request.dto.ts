@@ -1,3 +1,11 @@
-import { RegisterRequestDto } from './register-request.dto';
+import { ApiProperty } from '@nestjs/swagger';
 
-export class LoginRequestDto extends RegisterRequestDto {}
+export class LoginRequestDto {
+  @ApiProperty({ description: 'The email address the user registered with' })
+  email: string;
+
+  @ApiProperty({
+    description: "The user's password. Must match the password used during registration.",
+  })
+  password: string;
+}

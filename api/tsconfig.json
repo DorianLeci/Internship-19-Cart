@@ -24,6 +24,7 @@
     "paths": {
       "@prisma/*": ["src/prisma/*"],
       "@decorators/*": ["src/common/decorators/*"],
+      "@pipes/*": ["src/common/pipes/*"],
       "@config/*": ["src/common/config/*"],
       "@constants/*": ["src/common/constants/*"],
       "@guards/*": ["src/common/guards/*"],
