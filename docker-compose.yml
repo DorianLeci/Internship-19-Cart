@@ -5,9 +5,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - '5173:5173'
-    volumes:
-      - ./web:/app
-      - /app/node_modules
 
   backend:
     build:
@@ -16,10 +13,6 @@ services:
 
     environment:
       DATABASE_URL: 'postgresql://postgres:postgres@db:5432/Cart?schema=public'
-
-    volumes:
-      - ./api:/app
-      - /app/node_modules
 
     ports:
       - '3000:3000'

@@ -1,6 +1,5 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -8,17 +7,17 @@ datasource db {
 }
 
 enum ShirtSize{
-  XS,
-  S,
-  M,
-  L,
-  XL,
-  XXL,
+  XS
+  S
+  M
+  L
+  XL
+  XXL
   XXXL
 }
 
 enum ProductType{
-  CLOTHING,
+  CLOTHING
   SHOES
 }
 
@@ -44,6 +43,8 @@ model User{
   address Address?  
   card UserCard?
   role Role @default(USER)
+  orders Order[]
+  favorites Favorite[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt  
 }
@@ -90,6 +91,7 @@ model Product{
 
   images ProductImage[]
   favorites Favorite[]
+  orderItems OrderItem[]
 }
 
 model ProductImage{
@@ -133,7 +135,7 @@ model Order{
   shippingCity    String
   shippingCountry String
   shippingZipcode String
-  
+
   items OrderItem[]
 
   createdAt DateTime @default(now())
