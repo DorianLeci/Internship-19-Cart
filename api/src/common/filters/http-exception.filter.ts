@@ -12,7 +12,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     response.status(status).json({
       statusCode: status,
       path: request.url,
-      message: exception.message || exception.getResponse()['message'] || 'Internal Server Error',
+      message: exception.getResponse()['message'] || exception.message || 'Internal Server Error',
       data: null,
     });
   }

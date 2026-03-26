@@ -1,3 +1,4 @@
+import { AuthModule } from '@auth/auth.module';
 import configuration from '@config/configuration';
 import { UserThrottlerGuard } from '@guards/user-throttler.guard';
 import { ResponseInterceptor } from '@interceptors/response.interceptor';
@@ -15,6 +16,7 @@ import { PrismaService } from './prisma/prisma.service';
 @Module({
   imports: [
     PrismaModule,
+    AuthModule,
     ConfigModule.forRoot({
       isGlobal: true,
       load: [configuration],

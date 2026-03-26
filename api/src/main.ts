@@ -1,6 +1,6 @@
 import { AllExceptionsFilter } from '@filters/http-exception.filter';
 import { ResponseInterceptor } from '@interceptors/response.interceptor';
-import { ValidationPipe } from '@nestjs/common';
+import { BadRequestException, ValidationError, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -22,7 +22,19 @@ async function bootstrap() {
 
   app.use(helmet());
 
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+
+      exceptionFactory: (errors) => {
+        const errMsg = {};
+        errors.forEach((error: ValidationError) => {
+          errMsg[error.property] = Object.values(error.constraints || {});
+        });
+        return new BadRequestException({ message: errMsg });
+      },
+    }),
+  );
   app.useGlobalInterceptors(app.get(ResponseInterceptor));
   app.useGlobalFilters(new AllExceptionsFilter());
 

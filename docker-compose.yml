@@ -43,6 +43,9 @@ services:
     networks:
       - backend_network
 
+    ports:
+      - 5432:5432
+
 volumes:
   db_data:
 

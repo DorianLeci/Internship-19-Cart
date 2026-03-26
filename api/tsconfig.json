@@ -22,12 +22,19 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@config/*": ["src/config/*"],
+      "@prisma/*": ["src/prisma/*"],
       "@decorators/*": ["src/common/decorators/*"],
+      "@config/*": ["src/common/config/*"],
+      "@constants/*": ["src/common/constants/*"],
       "@guards/*": ["src/common/guards/*"],
       "@interceptors/*": ["src/common/interceptors/*"],
       "@middleware/*": ["src/common/middleware/*"],
-      "@filters/*": ["src/common/filters/*"]
+      "@filters/*": ["src/common/filters/*"],
+      "@strategy/*": ["src/common/strategy/*"],
+      "@tstypes/*": ["src/common/types/*"],
+      "@validators/*": ["src/common/validators/*"],
+      "@users/*": ["src/modules/users/*"],
+      "@auth/*": ["src/modules/auth/*"]
     }
   }
 }
