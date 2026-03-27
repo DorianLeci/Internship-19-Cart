@@ -1,9 +1,10 @@
 import { RolesAuth } from '@decorators/auth.decorator';
-import { Controller, Get, Req } from '@nestjs/common';
+import { Body, Controller, Get, Put, Req } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
 import { Role } from '@prisma/client';
 import type { RequestWithJwtUser } from '@tstypes/request-types';
 import { ProfileResponseDto } from './dto/profile-response.dto';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 import { UsersService } from './users.service';
 
 @Controller('users')
@@ -16,5 +17,12 @@ export class UsersController {
   async me(@Req() req: RequestWithJwtUser) {
     const id = req.user.sub;
     return this.usersService.getProfile(id);
+  }
+
+  @RolesAuth(Role.ADMIN, Role.USER)
+  @Put('me')
+  async updateMe(@Req() req: RequestWithJwtUser, @Body() dto: UpdateProfileDto) {
+    const id = req.user.sub;
+    return this.usersService.updateProfile(id, dto);
   }
 }

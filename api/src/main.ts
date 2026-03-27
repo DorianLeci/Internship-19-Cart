@@ -8,6 +8,19 @@ import { TrimPipe } from '@pipes/trim.pipe';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
 
+function mapValidationErrors(errors: ValidationError[]): any {
+  const result = {};
+  errors.forEach((error) => {
+    if (error.children && error.children.length > 0) {
+      console.log(error.children);
+      result[error.property] = mapValidationErrors(error.children);
+    } else {
+      result[error.property] = Object.values(error.constraints || {});
+    }
+  });
+  return result;
+}
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
@@ -27,13 +40,10 @@ async function bootstrap() {
     new TrimPipe(),
     new ValidationPipe({
       whitelist: true,
+      transform: true,
 
       exceptionFactory: (errors) => {
-        const errMsg = {};
-        errors.forEach((error: ValidationError) => {
-          errMsg[error.property] = Object.values(error.constraints || {});
-        });
-        return new BadRequestException({ message: errMsg });
+        return new BadRequestException({ message: mapValidationErrors(errors) });
       },
     }),
   );

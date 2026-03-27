@@ -1,15 +1,31 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { IsNotExpired } from '@validators/expiry-date.validator';
+import { IsInt, IsOptional, Length, Matches, Max, Min, Validate } from 'class-validator';
 
 export class UserCardDto {
-  @ApiProperty({ description: 'Card expiry month' })
+  @ApiPropertyOptional({ description: 'Card expiry month' })
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  @Max(12)
   expiryMonth: number;
 
-  @ApiProperty({ description: 'Card expiry year' })
+  @ApiPropertyOptional({ description: 'Card expiry year' })
+  @IsOptional()
+  @IsInt()
   expiryYear: number;
 
-  @ApiProperty({ description: 'IBAN number' })
+  @ApiPropertyOptional({ description: 'IBAN number' })
+  @IsOptional()
+  @Matches(/^[A-Z]{2}[A-Z\d]{11,30}$/, { message: 'Invalid IBAN format' })
   iban: string;
 
-  @ApiProperty({ description: 'Card CVC code' })
+  @ApiPropertyOptional({ description: 'Card CVC code' })
+  @IsOptional()
+  @Length(3)
+  @Matches(/^\d+$/, { message: 'CVC must contain only numbers' })
   cvc: string;
+
+  @Validate(IsNotExpired)
+  _expiryCheck?: any;
 }

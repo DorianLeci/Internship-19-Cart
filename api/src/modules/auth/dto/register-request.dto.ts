@@ -1,7 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { UserAddressDto } from '@users/dto/user-address.dto';
+import { UserCardDto } from '@users/dto/user-card.dto';
 import { IsValidName } from '@validators/name.validator';
 import { IsStrongPassword } from '@validators/password.validator';
-import { IsEmail, MinLength } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsEmail, MinLength, ValidateNested } from 'class-validator';
 
 export class RegisterRequestDto {
   @ApiProperty({ description: 'User email, must be unique' })
@@ -24,4 +27,14 @@ export class RegisterRequestDto {
   @MinLength(8)
   @IsStrongPassword()
   password: string;
+
+  @ApiProperty({ type: () => UserAddressDto })
+  @ValidateNested()
+  @Type(() => UserAddressDto)
+  address?: UserAddressDto;
+
+  @ApiProperty({ type: () => UserCardDto })
+  @ValidateNested()
+  @Type(() => UserCardDto)
+  card?: UserCardDto;
 }

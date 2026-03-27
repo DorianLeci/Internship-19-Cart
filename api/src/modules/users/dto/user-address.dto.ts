@@ -1,15 +1,24 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { IsOptional, IsString } from 'class-validator';
 
 export class UserAddressDto {
-  @ApiProperty({ description: 'Street address' })
+  @ApiPropertyOptional({ description: 'Street address' })
+  @IsOptional()
+  @IsString()
   street: string;
 
-  @ApiProperty({ description: 'City' })
+  @ApiPropertyOptional({ description: 'City' })
+  @IsOptional()
+  @IsString()
   city: string;
 
-  @ApiProperty({ description: 'ZIP / Postal code' })
+  @ApiPropertyOptional({ description: 'ZIP / Postal code' })
+  @IsOptional()
+  @IsString()
   zipcode: string;
 
-  @ApiProperty({ description: 'Country' })
+  @ApiPropertyOptional({ description: 'Country' })
+  @IsOptional()
+  @IsString()
   country: string;
 }

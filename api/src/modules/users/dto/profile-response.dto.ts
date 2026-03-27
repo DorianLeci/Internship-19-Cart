@@ -18,9 +18,9 @@ export class ProfileResponseDto {
   @ApiPropertyOptional({ description: 'Avatar URL' })
   avatarUrl?: string;
 
-  @ApiPropertyOptional({ description: 'User address', type: () => UserAddressDto })
-  address?: UserAddressDto;
+  @ApiProperty({ description: 'User address', type: () => UserAddressDto })
+  address: UserAddressDto;
 
-  @ApiPropertyOptional({ description: 'User card info', type: () => UserCardDto })
-  card?: UserCardDto;
+  @ApiProperty({ description: 'User card info', type: () => UserCardDto })
+  card: UserCardDto;
 }
