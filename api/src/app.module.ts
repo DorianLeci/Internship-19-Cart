@@ -11,6 +11,7 @@ import { seconds, ThrottlerModule } from '@nestjs/throttler';
 import { UsersModule } from '@users/users.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ProductsModule } from './modules/products/products.module';
 import { UsersController } from './modules/users/users.controller';
 import { PrismaModule } from './prisma/prisma.module';
 import { PrismaService } from './prisma/prisma.service';
@@ -32,6 +33,7 @@ import { PrismaService } from './prisma/prisma.service';
         },
       ],
     }),
+    ProductsModule,
   ],
   controllers: [AppController, UsersController],
   providers: [

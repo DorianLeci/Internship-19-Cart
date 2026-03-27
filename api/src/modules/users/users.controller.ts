@@ -21,6 +21,10 @@ export class UsersController {
 
   @RolesAuth(Role.ADMIN, Role.USER)
   @Put('me')
+  @ApiOkResponse({
+    type: ProfileResponseDto,
+    description: 'Returns current user profile after update',
+  })
   async updateMe(@Req() req: RequestWithJwtUser, @Body() dto: UpdateProfileDto) {
     const id = req.user.sub;
     return this.usersService.updateProfile(id, dto);

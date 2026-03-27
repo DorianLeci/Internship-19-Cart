@@ -1,11 +1,11 @@
 import { RegisterRequestDto } from '@auth/dto/register-request.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Address, User, UserCard } from '@prisma/client';
+import { User } from '@prisma/client';
 import { PrismaService } from '@prisma/prisma.service';
+import { UserWithRelations } from '@tstypes/user';
 import { ProfileResponseDto } from './dto/profile-response.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
-
-type UserWithRelations = User & { address: Address | null; card: UserCard | null };
+import mapToDto from './helpers/map-to-dto.helper';
 
 @Injectable()
 export class UsersService {
@@ -51,18 +51,14 @@ export class UsersService {
 
     if (!user) throw new NotFoundException('User not found');
 
-    return {
-      id: user.id,
-      email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      avatarUrl: user.avatarUrl ?? undefined,
-      address: user.address!,
-      card: user.card!,
-    };
+    return mapToDto(user);
   }
 
   async updateProfile(userId: string, dto: UpdateProfileDto): Promise<ProfileResponseDto> {
+    const user = await this.findOneByid(userId);
+
+    if (!user) throw new NotFoundException('User not found');
+
     const { address, card, ...otherFields } = dto;
 
     const updatedUser = await this.prisma.user.update({
@@ -78,14 +74,6 @@ export class UsersService {
       },
     });
 
-    return {
-      id: updatedUser.id,
-      email: updatedUser.email,
-      firstName: updatedUser.firstName,
-      lastName: updatedUser.lastName,
-      avatarUrl: updatedUser.avatarUrl ?? undefined,
-      address: updatedUser.address!,
-      card: updatedUser.card!,
-    };
+    return mapToDto(updatedUser);
   }
 }
