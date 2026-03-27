@@ -1,8 +1,22 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post } from '@nestjs/common';
-import { ApiOkResponse } from '@nestjs/swagger';
+import { OptionalTokenGuard } from '@guards/optional-token.guard';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
+import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 import { SwaggerPaginatedApiResponse } from 'src/common/response/paginated-response.dto';
 import { CreateProductDto } from './dto/create-product.dto';
 import { FindProductsDto } from './dto/find-products.dto';
+import { ProductListDto } from './dto/product-list.dto';
 import { ProductResponseDto } from './dto/product-response.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductsService } from './products.service';
@@ -16,19 +30,29 @@ export class ProductsController {
     return this.productsService.create(createProductDto);
   }
 
+  @UseGuards(OptionalTokenGuard)
   @Post('search')
+  @ApiBearerAuth()
   @HttpCode(200)
   @ApiOkResponse({
-    type: SwaggerPaginatedApiResponse(ProductResponseDto, 'ProductResponseDto'),
+    type: SwaggerPaginatedApiResponse(ProductListDto, 'ProductListDto'),
     description: 'Returns a paginated list of products matching the search and filter criteria',
   })
-  findAll(@Body() dto: FindProductsDto) {
-    return this.productsService.findProducts(dto);
+  findAll(@Body() dto: FindProductsDto, @Req() req) {
+    const userId = req.user?.sub;
+    return this.productsService.findProducts(dto, userId);
   }
 
+  @UseGuards(OptionalTokenGuard)
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.productsService.findOne(+id);
+  @ApiBearerAuth()
+  @ApiOkResponse({
+    type: ProductResponseDto,
+    description: 'Returns detailed information for a single product',
+  })
+  findOne(@Param('id', ParseUUIDPipe) id: string, @Req() req) {
+    const userId = req.user?.sub;
+    return this.productsService.findOne(id, userId);
   }
 
   @Patch(':id')

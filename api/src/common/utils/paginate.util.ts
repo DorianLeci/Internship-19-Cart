@@ -6,6 +6,7 @@ interface PaginateOptions {
   limit?: number;
   where?: any;
   orderBy?: any;
+  include?: any;
 }
 
 export async function paginate<T>({
@@ -14,11 +15,12 @@ export async function paginate<T>({
   limit = 4,
   where,
   orderBy,
+  include,
 }: PaginateOptions): Promise<PaginatedResponse<T>> {
   const skip = (page - 1) * limit;
 
   const [results, total] = await Promise.all([
-    model.findMany({ skip, take: limit, where, orderBy }),
+    model.findMany({ skip, take: limit, where, orderBy, include }),
     model.count({ where }),
   ]);
 
