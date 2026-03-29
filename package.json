@@ -1,0 +1,17 @@
+{
+  "name": "cart-app",
+  "private": true,
+  "packageManager": "npm@11.6.2",
+  "workspaces": [
+    "services/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "start": "node apps/api/dist/main.js"
+  },
+  "devDependencies": {
+    "turbo": "^1.13.4"
+  }
+}
