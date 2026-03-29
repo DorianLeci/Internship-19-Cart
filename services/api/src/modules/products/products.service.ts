@@ -35,20 +35,20 @@ export class ProductsService {
         throw new BadRequestException('Shoe products cannot have shirt size in variants');
     }
 
-    return this.prisma.product.create({
+    const product = await this.prisma.product.create({
       data: {
         ...otherFields,
         variants: {
           create: variants.map((v) => ({
-            shirtSize: v.shirtSize ?? undefined,
-            shoeSize: v.shoeSize ?? undefined,
+            shirtSize: v.shirtSize,
+            shoeSize: v.shoeSize,
             stock: v.stock,
           })),
         },
         images: {
           create: images.map((img) => ({
             url: img.url,
-            color: img.color ?? undefined,
+            color: img.color,
           })),
         },
       },
@@ -57,8 +57,62 @@ export class ProductsService {
         images: true,
       },
     });
+
+    return { id: product.id };
   }
 
+  async update(productId: string, dto: UpdateProductDto): Promise<CreateProductResponseDto> {
+    const { variants, images, ...otherFields } = dto;
+
+    const existingProduct = await this.prisma.product.findUnique({
+      where: { id: productId },
+      include: { variants: true, images: true },
+    });
+
+    if (!existingProduct) throw new NotFoundException(`Product with id ${productId} not found`);
+
+    const type = existingProduct.type;
+
+    for (const v of variants ?? []) {
+      if (type === ProductType.CLOTHING && v.shoeSize !== undefined)
+        throw new BadRequestException('Clothing products cannot have shoe size in variants');
+      if (type === ProductType.SHOES && v.shirtSize !== undefined)
+        throw new BadRequestException('Shoe products cannot have shirt size in variants');
+    }
+
+    const updatedProduct = await this.prisma.product.update({
+      where: { id: productId },
+      data: {
+        ...otherFields,
+        variants: variants?.length
+          ? {
+              update: variants.map((v) => ({
+                where: { id: v.id, productId },
+                data: {
+                  shirtSize: v.shirtSize,
+                  shoeSize: v.shoeSize,
+                  stock: v.stock,
+                },
+              })),
+            }
+          : undefined,
+        images: images?.length
+          ? {
+              update: images.map((img) => ({
+                where: { id: img.id, productId },
+                data: {
+                  url: img.url,
+                  color: img.color,
+                },
+              })),
+            }
+          : undefined,
+      },
+      include: { variants: true, images: true },
+    });
+
+    return updatedProduct;
+  }
   async findProducts(
     query: FindProductsDto,
     userId: string | null,
@@ -139,15 +193,11 @@ export class ProductsService {
       price: Number(product.price),
       description: product.description,
       brand: product.brand,
-      type: product.type,
+      type: product.type as ProductType,
       images: product.images.map((img) => mapToImageDto(img)),
       isFavorite,
       variants,
     };
-  }
-
-  update(id: string, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
   }
 
   remove(id: string) {

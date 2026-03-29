@@ -8,8 +8,8 @@ import {
   HttpCode,
   Param,
   ParseUUIDPipe,
-  Patch,
   Post,
+  Put,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -18,7 +18,7 @@ import { Role } from '@prisma/client';
 import { SwaggerPaginatedApiResponse } from 'src/common/response/paginated-response.dto';
 import { CreateProductDto } from './dto/create-product.dto';
 import { FindProductsDto } from './dto/find-products.dto';
-import { ProductListDto, ProductResponseDto } from './dto/response.dto';
+import { CreateProductResponseDto, ProductListDto, ProductResponseDto } from './dto/response.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductsService } from './products.service';
 
@@ -28,7 +28,10 @@ export class ProductsController {
 
   @RolesAuth(Role.ADMIN)
   @Post()
-  @ApiCreatedResponse({ description: 'Returns id if product is successfuly created' })
+  @ApiCreatedResponse({
+    description: 'Returns id if product is successfuly created',
+    type: () => CreateProductResponseDto,
+  })
   create(@Body() createProductDto: CreateProductDto) {
     return this.productsService.create(createProductDto);
   }
@@ -58,9 +61,14 @@ export class ProductsController {
     return this.productsService.findOne(id, userId);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productsService.update(id, updateProductDto);
+  @RolesAuth(Role.ADMIN)
+  @Put(':id')
+  @ApiOkResponse({
+    description: 'Returns id if product is successfuly created',
+    type: () => CreateProductResponseDto,
+  })
+  update(@Param('id', ParseUUIDPipe) id: string, @Body() dto: UpdateProductDto) {
+    return this.productsService.update(id, dto);
   }
 
   @Delete(':id')
