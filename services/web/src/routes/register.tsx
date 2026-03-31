@@ -1,11 +1,10 @@
 import RegisterPage from "@pages/Register";
 import { createRoute } from "@tanstack/react-router";
+import { AppPaths } from "./paths";
 import rootRoute from "./root";
 
-const registerRoute = createRoute({
+export const registerRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "/register",
+  path: AppPaths.REGISTER,
   component: () => <RegisterPage />,
 });
-
-export default registerRoute;

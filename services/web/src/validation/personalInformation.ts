@@ -2,6 +2,7 @@ import {
   MIN_PASSWORD_LENGTH,
   NAME_MAX_LENGTH,
   NAME_MIN_LENGTH,
+  nameRegex,
   passwordRegex,
 } from "@cart-app/types";
 import { z } from "zod";
@@ -15,14 +16,16 @@ export const personalInformationSchema = z
       .max(
         NAME_MAX_LENGTH,
         `Name can't be longer than ${NAME_MIN_LENGTH} characters`,
-      ),
+      )
+      .regex(nameRegex),
     lastName: z
       .string()
       .min(NAME_MIN_LENGTH, "Last name is required")
       .max(
         NAME_MAX_LENGTH,
         `Last name can't be longer than ${NAME_MIN_LENGTH} characters`,
-      ),
+      )
+      .regex(nameRegex),
     password: z
       .string()
       .min(

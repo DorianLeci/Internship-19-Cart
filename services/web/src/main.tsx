@@ -1,5 +1,5 @@
 import indexRoute from "@routes/indexRoute";
-import registerRoute from "@routes/register";
+import { registerRoute } from "@routes/register";
 import rootRoute from "@routes/root";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";

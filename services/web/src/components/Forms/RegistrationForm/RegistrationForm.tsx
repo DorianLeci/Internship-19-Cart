@@ -1,10 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 
+import { AddressType } from "@cart-app/types";
 import {
   RegistrationFormTypeEnum,
   registrationFormSchema,
 } from "@validation/registrationForm";
+import AddressInformation from "../AddressInformation";
+import PaymentInformation from "../PaymentInformation";
 import PersonalInformation from "../PersonalInformation";
 
 const RegistrationForm = () => {
@@ -23,9 +26,12 @@ const RegistrationForm = () => {
   } = formMethods;
 
   const formType = watch("formType");
-  const formTypeIsPersonalInformation = formType === "personalInformation";
-  const formTypeIsShippingAddress = formType === "address";
-  const formTypeIsPaymentInformation = formType === "paymentInformation";
+  const formTypeIsPersonalInformation =
+    formType === RegistrationFormTypeEnum.PersonalInformation;
+  const formTypeIsShippingAddress =
+    formType === RegistrationFormTypeEnum.Address;
+  const formTypeIsPaymentInformation =
+    formType === RegistrationFormTypeEnum.PaymentInformation;
 
   function setFormType(formType: RegistrationFormTypeEnum) {
     formMethods.setValue("formType", formType);
@@ -33,23 +39,30 @@ const RegistrationForm = () => {
 
   function handleNextFormType() {
     switch (formType) {
-      case "personalInformation":
+      case RegistrationFormTypeEnum.PersonalInformation:
         setFormType(RegistrationFormTypeEnum.Address);
+        formMethods.setValue("shippingAddress", {
+          street: "",
+          city: "",
+          country: "",
+          zipCode: "",
+          type: AddressType.SHIPPING,
+        });
+
+        formMethods.setValue("billingAddress", {
+          street: "",
+          city: "",
+          country: "",
+          zipCode: "",
+          type: AddressType.BILLING,
+        });
         break;
-      case "address":
+      case RegistrationFormTypeEnum.Address:
         setFormType(RegistrationFormTypeEnum.PaymentInformation);
         break;
-      case "paymentInformation":
-      // console.log("submit", getValues());
-
-      // toast({
-      //   title: "Successfully registered!",
-      //   description: "Your registration has been successfully submitted.",
-      //   action: (
-      //     <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
-      //   ),
-      // });
-      // break;
+      case RegistrationFormTypeEnum.PaymentInformation:
+        console.log("submit", getValues());
+        break;
     }
   }
 
@@ -57,8 +70,8 @@ const RegistrationForm = () => {
     <FormProvider {...formMethods}>
       <form onSubmit={handleSubmit(handleNextFormType)}>
         {formTypeIsPersonalInformation && <PersonalInformation />}
-        {/* {formTypeIsShippingAddress && <ShippingAddress />}
-        {formTypeIsPaymentInformation && <PaymentInformation />} */}
+        {formTypeIsShippingAddress && <AddressInformation />}
+        {formTypeIsPaymentInformation && <PaymentInformation />}
 
         <button type="submit">
           {formTypeIsPaymentInformation ? "Submit" : "Next"}

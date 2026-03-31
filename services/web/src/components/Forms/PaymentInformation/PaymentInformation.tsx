@@ -2,7 +2,7 @@ import FormInput from "@components/FormInput";
 import { type RegistrationFormSchemaProps } from "@validation/registrationForm";
 import { useFormContext } from "react-hook-form";
 
-const PersonalInformation = () => {
+const PaymentInformation = () => {
   const {
     register,
     formState: { errors },
@@ -10,54 +10,45 @@ const PersonalInformation = () => {
 
   return (
     <fieldset>
-      <legend>Personal Information</legend>
+      <legend>Payment Information</legend>
 
       <FormInput
-        label="Email"
+        label="Expiry Month"
         fullWidth
         margin="normal"
-        {...register("personalInformation.email")}
-        error={!!errors.personalInformation?.email}
-        helperText={errors.personalInformation?.email?.message}
-      />
-
-      <FormInput
-        label="First Name"
-        fullWidth
-        margin="normal"
-        {...register("personalInformation.firstName")}
-        error={!!errors.personalInformation?.firstName}
-        helperText={errors.personalInformation?.firstName?.message}
+        {...register("paymentInformation.expiryMonth", { valueAsNumber: true })}
+        error={!!errors.paymentInformation?.expiryMonth}
+        helperText={errors.paymentInformation?.expiryMonth?.message}
       />
 
       <FormInput
-        label="Last Name"
+        label="Expiry Year"
         fullWidth
         margin="normal"
-        {...register("personalInformation.lastName")}
-        error={!!errors.personalInformation?.lastName}
-        helperText={errors.personalInformation?.lastName?.message}
+        {...register("paymentInformation.expiryYear", { valueAsNumber: true })}
+        error={!!errors.paymentInformation?.expiryYear}
+        helperText={errors.paymentInformation?.expiryYear?.message}
       />
+
       <FormInput
-        label="Password"
-        type="password"
+        label="IBAN"
         fullWidth
         margin="normal"
-        {...register("personalInformation.password")}
-        error={!!errors.personalInformation?.password}
-        helperText={errors.personalInformation?.password?.message}
+        {...register("paymentInformation.iban")}
+        error={!!errors.paymentInformation?.iban}
+        helperText={errors.paymentInformation?.iban?.message}
       />
+
       <FormInput
-        label="Confirm Password"
-        type="password"
+        label="CVC"
         fullWidth
         margin="normal"
-        {...register("personalInformation.confirmPassword")}
-        error={!!errors.personalInformation?.confirmPassword}
-        helperText={errors.personalInformation?.confirmPassword?.message}
+        {...register("paymentInformation.cvc")}
+        error={!!errors.paymentInformation?.cvc}
+        helperText={errors.paymentInformation?.cvc?.message}
       />
     </fieldset>
   );
 };
 
-export default PersonalInformation;
+export default PaymentInformation;

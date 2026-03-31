@@ -28,7 +28,8 @@
       "@validation/*": ["validation/*"],
       "@pages/*": ["pages/*"],
       "@components/*": ["components/*"],
-      "@routes/*": ["routes/*"]
+      "@routes/*": ["routes/*"],
+      "@forms/*": ["forms/*"]
     }
   },
   "include": ["src"]

@@ -34,6 +34,7 @@ export const registrationFormSchema = z.discriminatedUnion("formType", [
 export type RegistrationFormSchemaProps = {
   formType: RegistrationFormTypeEnum;
   personalInformation: PersonalInformationFormSchemaProps;
-  address: AddressFormSchemaProps;
+  billingAddress: AddressFormSchemaProps;
+  shippingAddress: AddressFormSchemaProps;
   paymentInformation: PaymentInformationFormSchemaProps;
 };

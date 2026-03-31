@@ -18,10 +18,6 @@ export const paymentInformationSchema = z
         `Month cannot be higher than ${MAX_EXPIRTY_MONTH}`,
       ),
     expiryYear: z.number(),
-    cardholderName: z
-      .string()
-      .min(1, "Cardholder name is required")
-      .max(50, "Cardholder name is too long"),
     cvc: z
       .string()
       .length(CVC_LENGTH, `CVV must have length of ${CVC_LENGTH} `)
@@ -34,7 +30,7 @@ export const paymentInformationSchema = z
     },
     {
       message: "Card has already expired",
-      path: ["expirtyMonth"],
+      path: ["expiryYear"],
     },
   );
 
