@@ -1,8 +1,12 @@
 import { AddressType } from "../enums/enum";
 
 export type AccessToken = {
-  access_token: string;
+  accessToken: string;
 };
+
+export interface MeResponseDto {
+  isLoggedIn: boolean;
+}
 
 export class RegisterRequestDto {
   email: string;
@@ -11,6 +15,11 @@ export class RegisterRequestDto {
   password: string;
   addresses: UserAddressDto[];
   card: UserCardDto;
+}
+
+export class LoginRequestDto {
+  email: string;
+  password: string;
 }
 
 class UserAddressDto {
