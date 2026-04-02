@@ -4,7 +4,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import FormInput from "@components/FormInput";
 import useAuth from "@hooks/useAuth";
 import { loginRoute } from "@routes/auth";
-import indexRoute from "@routes/indexRoute";
+import welcomeRoute from "@routes/welcome";
 import { getRouteApi, useNavigate } from "@tanstack/react-router";
 import { loginFormSchema } from "@validation/loginForm";
 
@@ -30,7 +30,7 @@ const LoginForm = () => {
     const values = getValues();
     loginMutation.mutate(values, {
       onSuccess: () => {
-        navigate({ to: search.redirect || indexRoute.id });
+        navigate({ to: search.redirect || welcomeRoute.id });
       },
     });
   };

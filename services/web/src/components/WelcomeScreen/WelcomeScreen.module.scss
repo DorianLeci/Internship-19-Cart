@@ -1,0 +1,17 @@
+.welcomeScreen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.startLogo {
+  width: 200px;
+  aspect-ratio: 1/1;
+}
+
+.endLogo {
+  display: block;
+  width: 400px;
+  transform: translateY(20%);
+}

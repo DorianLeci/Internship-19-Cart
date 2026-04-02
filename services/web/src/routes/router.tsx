@@ -8,6 +8,7 @@ import { authLayoutRoute, loginRoute, registerRoute } from "./auth";
 import { forbiddenRoute } from "./forbidden";
 import indexRoute from "./indexRoute";
 import redirectToAuthRoute from "./redirect";
+import welcomeRoute from "./welcome";
 export interface RootContext {
   auth: ReturnType<typeof useAuth>;
   queryClient: QueryClient;
@@ -15,6 +16,7 @@ export interface RootContext {
 
 const routeTree = rootRoute.addChildren([
   redirectToAuthRoute,
+  welcomeRoute,
   authLayoutRoute.addChildren([loginRoute, registerRoute]),
   appLayoutRoute.addChildren([indexRoute, adminRoute, forbiddenRoute]),
 ]);

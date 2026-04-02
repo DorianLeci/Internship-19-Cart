@@ -5,7 +5,7 @@ import { AddressType } from "@cart-app/types";
 import mapToRegisterDto from "@helpers/map-to-register-dto";
 import useAuth from "@hooks/useAuth";
 import { registerRoute } from "@routes/auth";
-import indexRoute from "@routes/indexRoute";
+import welcomeRoute from "@routes/welcome";
 import { getRouteApi, useNavigate } from "@tanstack/react-router";
 import {
   RegistrationFormTypeEnum,
@@ -71,7 +71,7 @@ const RegistrationForm = () => {
         const values = getValues() as RegistrationFormSchemaProps;
         registerMutation.mutate(mapToRegisterDto(values), {
           onSuccess: () => {
-            navigate({ to: search.redirect || indexRoute.id });
+            navigate({ to: search.redirect || welcomeRoute.id });
           },
         });
         break;
