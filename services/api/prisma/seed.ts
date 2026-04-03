@@ -1,47 +1,80 @@
 import { ProductColor } from '@cart-app/types';
-import { PrismaClient, ProductType, ShirtSize } from '@prisma/client';
+import { AddressType, PrismaClient, ProductType, Role } from '@prisma/client';
+import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
 async function main() {
-  // const passwordHash = await bcrypt.hash('Admin123!', 10);
+  const passwordHash = await bcrypt.hash('mama123#', 10);
 
-  // const admin = await prisma.user.upsert({
-  //   data: {
-  //     email: 'admin@example.com',
-  //     password: passwordHash,
-  //     firstName: 'Admin',
-  //     lastName: 'User',
-  //     role: Role.ADMIN,
-  //   },
-  // });
-
-  const category = await prisma.category.create({
+  const user = await prisma.user.create({
     data: {
-      name: 'Clothing',
+      email: 'user@example.com',
+      password: passwordHash,
+      firstName: 'John',
+      lastName: 'Doe',
+      role: Role.USER,
+      avatarUrl: null,
     },
   });
 
-  const product = await prisma.product.create({
+  const address = await prisma.address.create({
     data: {
-      name: 'Cool T-Shirt',
-      description: 'Super udoban T-shirt za svakodnevno nošenje',
-      brand: 'BrandX',
-      price: 29.99,
-      categoryId: category.id,
-      type: ProductType.CLOTHING,
+      userId: user.id,
+      type: AddressType.SHIPPING,
+      street: '123 Main St',
+      city: 'Zagreb',
+      country: 'Croatia',
+      zipcode: '10000',
+    },
+  });
+
+  await prisma.userCard.create({
+    data: {
+      userId: user.id,
+      expiryMonth: 12,
+      expiryYear: 2026,
+      iban: 'HR1234567890123456789',
+      cvc: '123',
+    },
+  });
+
+  const categories = ['Streetwear', 'Formal', 'Casual', 'Sport'];
+  const categoryMap: Record<string, string> = {};
+
+  for (const categoryName of categories) {
+    const category = await prisma.category.create({
+      data: {
+        name: categoryName,
+      },
+    });
+
+    categoryMap[category.name] = category.id;
+  }
+
+  await prisma.product.create({
+    data: {
+      name: 'Tiger Mexico 66',
+      description: 'Niske tenisice',
+      brand: 'Onitsuka',
+      price: 89.9,
+      categoryId: categoryMap['Streetwear'],
+      type: ProductType.SHOES,
       images: {
         create: [
           {
-            url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhxtx5uOH2FwWtC_-HAnN75PQqBFgfLF9D2w&s',
-            color: ProductColor.BLACK,
+            url: '/products/tiger/yellow.png',
+            color: ProductColor.YELLOW,
           },
+          { url: '/products/tiger/red.png', color: ProductColor.RED },
         ],
       },
       variants: {
         create: [
-          { shirtSize: ShirtSize.M, stock: 5 },
-          { shirtSize: ShirtSize.L, stock: 5 },
+          { shoeSize: 44, stock: 50 },
+          { shoeSize: 45, stock: 50 },
+          { shoeSize: 46, stock: 50 },
+          { shoeSize: 47, stock: 50 },
         ],
       },
     },
@@ -49,28 +82,31 @@ async function main() {
 
   await prisma.product.create({
     data: {
-      name: 'Comfy Sneakers',
-      description: 'Lagane i udobne tenisice za svakodnevno nošenje',
-      brand: 'SneakerCo',
-      price: 59.99,
-      categoryId: category.id,
+      name: 'Spezial',
+      description: 'Low-Top sneakers',
+      brand: 'Adidas',
+      price: 79.9,
+      categoryId: categoryMap['Streetwear'],
       type: ProductType.SHOES,
       images: {
         create: [
-          { url: 'https://example.com/images/comfy-sneakers-white.jpg', color: ProductColor.WHITE },
-          { url: 'https://example.com/images/comfy-sneakers-black.jpg', color: ProductColor.BLACK },
+          {
+            url: '/products/adidasSpezial/navy.png',
+            color: ProductColor.BLUE,
+          },
+          { url: '/products/adidasSpezial/red.png', color: ProductColor.RED },
         ],
       },
       variants: {
         create: [
-          { shoeSize: 40, stock: 50 },
-          { shoeSize: 42, stock: 50 },
+          { shoeSize: 44, stock: 50 },
+          { shoeSize: 45, stock: 50 },
+          { shoeSize: 46, stock: 50 },
+          { shoeSize: 47, stock: 50 },
         ],
       },
     },
   });
-
-  console.log('Seeded product:', product);
 }
 
 main()

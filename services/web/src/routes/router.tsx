@@ -7,8 +7,10 @@ import { createRouter } from "@tanstack/react-router";
 import { adminRoute } from "./admin";
 import { appLayoutRoute } from "./appLayout";
 import { authLayoutRoute, loginRoute, registerRoute } from "./auth";
+import favoritesRoute from "./favoritesRoute";
 import { forbiddenRoute } from "./forbidden";
 import indexRoute from "./indexRoute";
+import searchRoute from "./productRoute";
 import redirectToAuthRoute from "./redirect";
 import welcomeRoute from "./welcome";
 export interface RootContext {
@@ -20,7 +22,13 @@ const routeTree = rootRoute.addChildren([
   redirectToAuthRoute,
   welcomeRoute,
   authLayoutRoute.addChildren([loginRoute, registerRoute]),
-  appLayoutRoute.addChildren([indexRoute, adminRoute, forbiddenRoute]),
+  appLayoutRoute.addChildren([
+    indexRoute,
+    adminRoute,
+    searchRoute,
+    favoritesRoute,
+    forbiddenRoute,
+  ]),
 ]);
 
 const context: RootContext = {

@@ -35,7 +35,7 @@ const HomePage = () => {
 
   const products = data?.pages.flatMap((page) => page.results) ?? [];
 
-  if (isError || products.length === 0)
+  if (isError)
     return <FetchError message="Error loading products" onRetry={refetch} />;
 
   const isEmpty = !isLoading && products.length === 0;

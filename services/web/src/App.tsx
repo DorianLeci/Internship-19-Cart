@@ -1,4 +1,5 @@
 import { AuthProvider } from "@context/AuthContext";
+import { FavoritesProvider } from "@context/FavoritesContext";
 import useAuth from "@hooks/useAuth";
 import { router } from "@routes/router";
 import { RouterProvider } from "@tanstack/react-router";
@@ -14,8 +15,13 @@ function InnerApp() {
 function App() {
   return (
     <AuthProvider>
-      <InnerApp />
-      <Toaster position="top-right" toastOptions={{ duration: 2500 }}></Toaster>
+      <FavoritesProvider>
+        <InnerApp />
+        <Toaster
+          position="top-right"
+          toastOptions={{ duration: 2500 }}
+        ></Toaster>
+      </FavoritesProvider>
     </AuthProvider>
   );
 }

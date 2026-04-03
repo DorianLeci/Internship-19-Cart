@@ -1,4 +1,5 @@
 import {
+  SortOrder,
   type FindProductsDto,
   type PaginatedResponse,
   type ProductListDto,
@@ -10,6 +11,7 @@ import {
   type InfiniteData,
 } from "@tanstack/react-query";
 import { api } from ".";
+import { QueryKeys } from "./queryKeys";
 
 export const searchProducts = async (filters: FindProductsDto) => {
   return api.post<PaginatedResponse<ProductListDto>>(
@@ -18,8 +20,13 @@ export const searchProducts = async (filters: FindProductsDto) => {
   );
 };
 export const useProducts = (filters: FindProductsDto) => {
+  const updatedFilters: FindProductsDto = {
+    ...filters,
+    sortOrder: filters.sortOrder?.toLocaleLowerCase() as SortOrder,
+  };
+
   const queryKey = [
-    "products",
+    QueryKeys.PRODUCTS,
     filters.categoryId,
     filters.search,
     filters.sortOrder,
@@ -36,7 +43,7 @@ export const useProducts = (filters: FindProductsDto) => {
   >({
     queryKey,
     queryFn: ({ pageParam = 1 }) =>
-      searchProducts({ ...filters, pageNumber: pageParam }),
+      searchProducts({ ...updatedFilters, pageNumber: pageParam }),
     getNextPageParam: (lastPage) => lastPage.meta.next ?? undefined,
     placeholderData: keepPreviousData,
     staleTime: 5 * 60 * 1000,
@@ -48,7 +55,11 @@ export const prefetchProducts = async (
   queryClient: QueryClient,
   filters: FindProductsDto,
 ) => {
-  console.log(filters);
+  const updatedFilters: FindProductsDto = {
+    ...filters,
+    sortOrder: filters.sortOrder?.toLocaleLowerCase() as SortOrder,
+  };
+
   return queryClient.prefetchInfiniteQuery<
     PaginatedResponse<ProductListDto>,
     Error,
@@ -65,7 +76,7 @@ export const prefetchProducts = async (
       filters.limit,
     ],
     queryFn: ({ pageParam = 1 }) =>
-      searchProducts({ ...filters, pageNumber: pageParam }),
+      searchProducts({ ...updatedFilters, pageNumber: pageParam }),
     getNextPageParam: (lastPage: PaginatedResponse<ProductListDto>) =>
       lastPage.meta.next ?? undefined,
     staleTime: 5 * 60 * 1000,

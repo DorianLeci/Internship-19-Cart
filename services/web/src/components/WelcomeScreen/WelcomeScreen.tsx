@@ -31,7 +31,7 @@ const WelcomeScreen = () => {
     });
 
     t1.to(startLogoRef.current, {
-      x: -50,
+      x: -30,
       duration: 0.5,
       ease: "power1.inOut",
     });

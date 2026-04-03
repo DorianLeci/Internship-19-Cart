@@ -9,15 +9,15 @@ import { api } from "api";
 import { QueryKeys } from "./queryKeys";
 
 export const register = (data: RegisterRequestDto): Promise<AccessToken> => {
-  return api.post<RegisterRequestDto, AccessToken>("/auth/register", data);
+  return api.post<AccessToken>("/auth/register", data);
 };
 
 export const login = (data: LoginRequestDto): Promise<AccessToken> => {
-  return api.post<RegisterRequestDto, AccessToken>("/auth/login", data);
+  return api.post<AccessToken>("/auth/login", data);
 };
 
 export const me = async (): Promise<MeResponseDto> => {
-  return api.get<never, MeResponseDto>("/auth/me");
+  return api.get<MeResponseDto>("/auth/me");
 };
 
 export const useMe = (token: string | null) => {

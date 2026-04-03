@@ -20,7 +20,7 @@ export const registerRoute = createRoute({
   component: () => <RegisterPage />,
   beforeLoad: ({ context, search }) => {
     const fallback = indexRoute.id;
-    if (context.auth.isLoggedIn) {
+    if (!context.auth.isLoading && context.auth.isLoggedIn) {
       throw redirect({ to: search.redirect || fallback });
     }
   },

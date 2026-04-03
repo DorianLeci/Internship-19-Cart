@@ -1,8 +1,7 @@
-import { ProductListDto, ProductResponseDto, ProductType } from "@cart-app/types";
-import { ProductWithRelations } from "@products/products.service";
-import mapToImageDto from "./map-to-image-dto.helper";
-import mapToVariantDto from "./map-to-variant.dto.helper";
-
+import { ProductListDto, ProductResponseDto, ProductType } from '@cart-app/types';
+import { ProductWithRelations } from '@products/products.service';
+import mapToImageDto from './map-to-image-dto.helper';
+import mapToVariantDto from './map-to-variant.dto.helper';
 
 export function mapProductDetails(
   product: ProductWithRelations,
@@ -28,7 +27,9 @@ export function mapProductList(
   return {
     id: product.id,
     name: product.name,
+    brand: product.brand,
     price: Number(product.price),
+    description: product.description,
     images: product.images.map(mapToImageDto),
     ...(isFavorite === undefined ? {} : { isFavorite }),
   };

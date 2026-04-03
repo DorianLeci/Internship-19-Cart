@@ -21,6 +21,7 @@ import { ProductsModule } from './modules/products/products.module';
 import { UsersController } from './modules/users/users.controller';
 import { PrismaModule } from './prisma/prisma.module';
 import { PrismaService } from './prisma/prisma.service';
+import { CategoriesModule } from './modules/categories/categories.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { PrismaService } from './prisma/prisma.service';
     FavoritesModule,
     OrdersModule,
     MailsModule,
+    CategoriesModule,
   ],
   controllers: [AppController, UsersController],
   providers: [

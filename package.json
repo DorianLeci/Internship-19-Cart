@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
-    "start": "node apps/api/dist/main.js"
+    "start": "node services/api/dist/src/main.js"
   },
   "devDependencies": {
     "turbo": "^1.13.4"

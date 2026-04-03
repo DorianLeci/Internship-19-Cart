@@ -41,17 +41,13 @@ enum AddressType{
 }
 
 enum ProductColor {
-  RED
-  BLUE
-  GREEN
   BLACK
   WHITE
-  YELLOW
   GRAY
-  ORANGE
-  PURPLE
-  VIOLET
-  CYAN
+  BLUE
+  GREEN
+  RED
+  YELLOW
 }
 
 model User{

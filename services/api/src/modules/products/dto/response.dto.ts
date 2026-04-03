@@ -44,6 +44,12 @@ export class ProductListDto {
   @ApiProperty()
   name: string;
 
+  @ApiProperty({ description: 'Brand of the product' })
+  brand: string;
+
+  @ApiProperty({ description: 'Full product description' })
+  description: string;
+
   @ApiProperty()
   price: number;
 
@@ -55,12 +61,6 @@ export class ProductListDto {
 }
 
 export class ProductResponseDto extends ProductListDto {
-  @ApiProperty({ description: 'Full product description' })
-  description: string;
-
-  @ApiProperty({ description: 'Brand of the product' })
-  brand: string;
-
   @ApiProperty({ description: 'Product type (CLOTHING, SHOES)', enum: ProductType })
   type: ProductType;
 

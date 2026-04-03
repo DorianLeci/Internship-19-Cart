@@ -42,7 +42,8 @@
       "@auth/*": ["src/modules/auth/*"],
       "@products/*": ["src/modules/products/*"],
       "@mails/*": ["src/modules/mails/*"],
-      "@orders/*": ["src/modules/orders/*"]
+      "@orders/*": ["src/modules/orders/*"],
+      "@assets/*": ["src/modules/orders/*"]
     }
   }
 }

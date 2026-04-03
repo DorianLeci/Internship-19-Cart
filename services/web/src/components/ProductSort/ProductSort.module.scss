@@ -1,0 +1,17 @@
+.directionBtn {
+  padding: 8px 32px;
+  border: 1px solid black;
+  border-radius: 32px;
+  background: none;
+  will-change: transform;
+  transform-origin: center center;
+  backface-visibility: hidden;
+  transition:
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease-in;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--box-shadow-hover);
+  }
+}
