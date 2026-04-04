@@ -1,4 +1,5 @@
 import type { ProductImageResponseDto } from "@cart-app/types";
+import Color from "@components/Color";
 
 interface ProductColorsProps {
   images: ProductImageResponseDto[];
@@ -10,16 +11,7 @@ const ProductColors = ({ images }: ProductColorsProps) => {
       {images
         .filter((img) => img.color !== undefined)
         .map((img) => (
-          <div
-            key={img.color}
-            style={{
-              width: "20px",
-              height: "20px",
-              borderRadius: "50%",
-              backgroundColor: img.color?.toLowerCase(),
-              border: "1px solid black",
-            }}
-          />
+          <Color key={img.color} color={img.color} />
         ))}
     </>
   );

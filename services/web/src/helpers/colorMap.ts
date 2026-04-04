@@ -1,6 +1,6 @@
 import { ProductColor } from "@cart-app/types";
 
-const colorMap: Record<ProductColor, string> = {
+export const colorMap: Record<ProductColor, string> = {
   [ProductColor.WHITE]: "#ffffff",
   [ProductColor.BLACK]: "#000000",
   [ProductColor.GRAY]: "#808080",
@@ -10,4 +10,7 @@ const colorMap: Record<ProductColor, string> = {
   [ProductColor.YELLOW]: "#ffff00",
 };
 
-export default colorMap;
+export const colorOptions = Object.entries(colorMap).map(([key, _]) => ({
+  value: key as ProductColor,
+  label: key,
+}));

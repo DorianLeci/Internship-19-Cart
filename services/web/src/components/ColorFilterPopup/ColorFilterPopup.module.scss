@@ -1,0 +1,44 @@
+.popup {
+  position: fixed;
+  top: 84px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.popupUpper {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 70px;
+  border-bottom: 2px solid #5a3e36;
+
+  h1 {
+    font-size: 26px;
+    font-weight: 100;
+  }
+}
+
+.exitButton {
+  transition: transform 0.2s ease-in-out;
+  &:hover {
+    transform: scale(1.03);
+  }
+}
+
+.buttonWrapper {
+  display: flex;
+  justify-content: flex-end;
+  width: 100vw;
+  padding-right: 20px;
+}
+
+.openButton {
+  cursor: pointer;
+}
