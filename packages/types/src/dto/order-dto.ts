@@ -1,4 +1,4 @@
-import { ClothingSize, ProductColor } from "../enums/enum";
+import { ClothingSize, PaymentMethod, ProductColor } from "../enums/enum";
 
 export interface MailDto {
   items: MailItem[];
@@ -19,4 +19,9 @@ export interface CartItemDto {
   variantId: string;
   quantity: number;
   color: string;
+}
+
+export interface CreateOrderDto {
+  cartItems: CartItemDto[];
+  paymentMethod: PaymentMethod;
 }

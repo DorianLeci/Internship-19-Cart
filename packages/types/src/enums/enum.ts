@@ -31,5 +31,9 @@ export enum ProductColor {
   GREEN = "GREEN",
   RED = "RED",
   YELLOW = "YELLOW",
-  LEATHER = "LEATHER",
+}
+
+export enum PaymentMethod {
+  CARD = "CARD",
+  CASH = "CASH",
 }

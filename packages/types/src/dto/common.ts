@@ -1,5 +1,5 @@
 export interface ActionResponseDto {
-  id: string;
+  id?: string;
   message?: string;
 }
 
