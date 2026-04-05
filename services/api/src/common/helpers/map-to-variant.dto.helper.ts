@@ -1,10 +1,10 @@
-import { ProductVariantResponseDto, ShirtSize } from '@cart-app/types';
+import { ClothingSize, ProductVariantResponseDto } from '@cart-app/types';
 import { ProductType, ProductVariant } from '@prisma/client';
 
 const mapToVariantDto = (variant: ProductVariant): ProductVariantResponseDto => {
   return {
     id: variant.id,
-    shirtSize: (variant.shirtSize as ShirtSize) ?? undefined,
+    clothingSize: (variant.clothingSize as ClothingSize) ?? undefined,
     shoeSize: variant.shoeSize ?? undefined,
     stock: variant.stock,
   };

@@ -1,5 +1,6 @@
-import { ProductColor, ProductType, ShirtSize } from '@cart-app/types';
+import { ProductColor, ProductType } from '@cart-app/types';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ClothingSize } from '@prisma/client';
 
 export class ProductImageResponseDto {
   @ApiProperty()
@@ -20,9 +21,9 @@ export class ProductVariantResponseDto {
 
   @ApiPropertyOptional({
     description: 'Shirt size (if product is clothing)',
-    enum: ShirtSize,
+    enum: ClothingSize,
   })
-  shirtSize?: ShirtSize;
+  clothingSize?: ClothingSize;
 
   @ApiPropertyOptional({
     description: 'Shirt size (if product is shoes)',

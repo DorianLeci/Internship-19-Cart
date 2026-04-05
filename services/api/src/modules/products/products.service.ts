@@ -27,10 +27,10 @@ export class ProductsService {
     const { variants, images, ...otherFields } = dto;
 
     for (const v of variants) {
-      if (dto.type === ProductType.CLOTHING && v.shoeSize !== undefined)
+      if (dto.type === ProductType.CLOTHING && v.clothingSize !== undefined)
         throw new BadRequestException('Clothing products cannot have shoe size in variants');
 
-      if (dto.type === ProductType.SHOES && v.shirtSize !== undefined)
+      if (dto.type === ProductType.SHOES && v.shoeSize !== undefined)
         throw new BadRequestException('Shoe products cannot have shirt size in variants');
     }
 
@@ -39,7 +39,7 @@ export class ProductsService {
         ...otherFields,
         variants: {
           create: variants.map((v) => ({
-            shirtSize: v.shirtSize,
+            clothingSizeSize: v.clothingSize,
             shoeSize: v.shoeSize,
             stock: v.stock,
           })),
@@ -74,7 +74,7 @@ export class ProductsService {
     for (const v of variants ?? []) {
       if (type === ProductType.CLOTHING && v.shoeSize !== undefined)
         throw new BadRequestException('Clothing products cannot have shoe size in variants');
-      if (type === ProductType.SHOES && v.shirtSize !== undefined)
+      if (type === ProductType.SHOES && v.clothingSize !== undefined)
         throw new BadRequestException('Shoe products cannot have shirt size in variants');
     }
 
@@ -87,7 +87,7 @@ export class ProductsService {
               update: variants.map((v) => ({
                 where: { id: v.id, productId },
                 data: {
-                  shirtSize: v.shirtSize,
+                  clothingSize: v.clothingSize,
                   shoeSize: v.shoeSize,
                   stock: v.stock,
                 },

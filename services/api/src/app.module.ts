@@ -22,6 +22,7 @@ import { UsersController } from './modules/users/users.controller';
 import { PrismaModule } from './prisma/prisma.module';
 import { PrismaService } from './prisma/prisma.service';
 import { CategoriesModule } from './modules/categories/categories.module';
+import { CartModule } from './modules/cart/cart.module';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { CategoriesModule } from './modules/categories/categories.module';
     OrdersModule,
     MailsModule,
     CategoriesModule,
+    CartModule,
   ],
   controllers: [AppController, UsersController],
   providers: [

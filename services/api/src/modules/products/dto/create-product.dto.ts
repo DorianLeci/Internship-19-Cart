@@ -8,7 +8,7 @@ import {
   MIN_STOCK_NUMBER,
 } from '@cart-app/types';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { ProductColor, ProductType, ShirtSize } from '@prisma/client';
+import { ClothingSize, ProductColor, ProductType } from '@prisma/client';
 import { Type } from 'class-transformer';
 import {
   ArrayMinSize,
@@ -28,12 +28,12 @@ import {
 
 export class CreateProductVariantDto {
   @ApiPropertyOptional({
-    description: 'Shirt size (if product is clothing)',
-    enum: ShirtSize,
+    description: 'Clothing size (if product is clothing)',
+    enum: ClothingSize,
   })
   @IsOptional()
-  @IsEnum(ShirtSize)
-  shirtSize?: ShirtSize;
+  @IsEnum(ClothingSize)
+  clothingSize?: ClothingSize;
 
   @ApiPropertyOptional({
     description: 'Shoe size (if applicable)',

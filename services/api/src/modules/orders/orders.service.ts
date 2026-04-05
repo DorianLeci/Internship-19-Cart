@@ -1,4 +1,4 @@
-import { MailItem, ProductColor, ShirtSize } from '@cart-app/types';
+import { ClothingSize, MailItem } from '@cart-app/types';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { AddressType } from '@prisma/client';
 import { PrismaService } from '@prisma/prisma.service';
@@ -70,8 +70,8 @@ export class OrdersService {
       mailItemsData.push({
         productName: product.name,
         brand: product.name,
-        size: (variant.shirtSize as ShirtSize) ?? variant.shoeSize,
-        color: cartItem.color as ProductColor,
+        size: (variant.clothingSize as ClothingSize) ?? variant.shoeSize,
+        color: cartItem.color,
         quantity: cartItem.quantity,
         price: Number(product.price),
         imageUrl: image?.url,
