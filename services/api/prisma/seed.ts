@@ -29,9 +29,55 @@ async function main() {
     },
   });
 
+  await prisma.address.create({
+    data: {
+      userId: user.id,
+      type: AddressType.BILLING,
+      street: '123 Main St',
+      city: 'Zagreb',
+      country: 'Croatia',
+      county: 'Splitsko-Dalmatinska',
+      zipcode: '10000',
+    },
+  });
+
   await prisma.userCard.create({
     data: {
       userId: user.id,
+      expiryMonth: 12,
+      expiryYear: 2026,
+      iban: 'HR1234567890123456789',
+      cvc: '123',
+    },
+  });
+
+  const adminPasswordHash = await bcrypt.hash('admin123#', 10);
+
+  const admin = await prisma.user.create({
+    data: {
+      email: 'admin@gmail.com',
+      password: adminPasswordHash,
+      firstName: 'Admin',
+      lastName: 'User',
+      role: Role.ADMIN,
+    },
+  });
+
+  await prisma.address.create({
+    data: {
+      userId: admin.id,
+      type: AddressType.BILLING,
+      street: '123 Main St',
+      city: 'Zagreb',
+      country: 'Croatia',
+      county: 'Splitsko-Dalmatinska',
+      zipcode: '10000',
+    },
+  });
+
+  await prisma.userCard.create({
+    data: {
+      userId: admin.id,
       expiryMonth: 12,
       expiryYear: 2026,
       iban: 'HR1234567890123456789',

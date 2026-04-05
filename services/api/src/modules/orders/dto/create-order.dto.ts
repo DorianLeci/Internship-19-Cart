@@ -1,7 +1,8 @@
 import { MIN_CART_ITEMS_NUM } from '@cart-app/types';
 import { ApiProperty } from '@nestjs/swagger';
+import { PaymentMethod } from '@prisma/client';
 import { Type } from 'class-transformer';
-import { ArrayMinSize, ValidateNested } from 'class-validator';
+import { ArrayMinSize, IsEnum, ValidateNested } from 'class-validator';
 import { CartItemDto } from 'src/modules/cart/dto/cart-item.dto';
 
 export class CreateOrderDto {
@@ -10,4 +11,8 @@ export class CreateOrderDto {
   @ValidateNested({ each: true })
   @Type(() => CartItemDto)
   cartItems: CartItemDto[];
+
+  @ApiProperty({ enum: PaymentMethod, description: 'Selected payment method for the order' })
+  @IsEnum(PaymentMethod)
+  paymentMethod: PaymentMethod;
 }

@@ -117,7 +117,11 @@ export class ProductsService {
   ): Promise<PaginatedResponse<ProductListDto>> {
     const where: any = {};
 
-    if (query.search) where.name = { contains: query.search, mode: 'insensitive' };
+    if (query.search)
+      where.OR = [
+        { name: { contains: query.search, mode: 'insensitive' } },
+        { brand: { contains: query.search, mode: 'insensitive' } },
+      ];
     const orderBy = { name: query.sortOrder || SortOrder.ASC };
 
     if (query.inStock === true) where.variants = { some: { stock: { gt: 0 } } };

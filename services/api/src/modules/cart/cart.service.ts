@@ -92,4 +92,12 @@ export class CartService {
       };
     });
   }
+
+  async removeAll(userId: string): Promise<ActionResponseDto> {
+    await this.prisma.cartItem.deleteMany({
+      where: { cart: { userId } },
+    });
+
+    return { message: 'Cart items successfully removed' };
+  }
 }

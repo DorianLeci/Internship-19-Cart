@@ -22,11 +22,6 @@ export class MailsService {
   async sendMail(to: string, subject: string, dto: MailDto) {
     const from = this.configService.getOrThrow<string>('MAIL_FROM');
 
-    const attachments = dto.items.map((item, index) => ({
-      filename: `product-${index}.jpg`,
-      path: item.imageUrl,
-    }));
-
     const html = `
       <h2>Your Order Summary</h2>
       <table border="1" cellpadding="5" cellspacing="0">
@@ -65,7 +60,6 @@ export class MailsService {
       to,
       subject,
       html,
-      attachments,
     });
   }
 }

@@ -87,6 +87,7 @@ export class OrdersService {
       data: {
         userId,
         totalPrice,
+        paymentMethod: dto.paymentMethod,
         shippingAddressId: shippingAddress.id,
         billingAddressId: billingAddress.id,
         items: { create: orderItemsData },
