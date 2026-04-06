@@ -38,13 +38,11 @@ cd Internship-19-Cart
    ```
    cp .env.example .env
    ```
-   Variable explanation:
-       PORT  Port where the backend server will run.
-    ALLOWED_ORIGINS Comma-separated list of allowed frontend URLs (used for CORS)(you can leave ports like it is in .env.example)
-    JWT_SECRET Secret key used for signing authentication tokens (generate with ```run openssl rand -hex 32```)
-    DATABASE_URL PostgreSQL connection string:
-
-4. Open .env and add your JWT secret: JWT_SECRET=your_secret_here
+   Variable explanation:<br/>
+       PORT  Port where the backend server will run.</br>
+       ALLOWED_ORIGINS Comma-separated list of allowed frontend URLs (used for CORS)(you can leave ports like it is in .env.example)</br>
+       JWT_SECRET Secret key used for signing authentication tokens (generate with ```run openssl rand -hex 32```)</br>
+       DATABASE_URL PostgreSQL connection string </br>
 
 ## Finally
 1. Navigate into the root folder:
