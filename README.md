@@ -73,11 +73,15 @@ cd Internship-19-Cart
       ```
       cd ../..
       ```
-   2. Build backend and frontend:
+   2. Install packages:
+      ```
+      npm install
+      ```
+   3. Build backend and frontend:
       ```
       npm run build
       ```
-   3. Start backend:
+   4. Start backend:
       ```
       npm run start
       ```
