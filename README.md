@@ -63,11 +63,11 @@ cd Internship-19-Cart
       sudo usermod -aG docker $USER
       docker compose up --build
       ```
-   ---
    3. Navigate into the web folder:
       ```
       npm run dev
       ```
+      
 ## Run with turbo
    1. Navigate into the root folder:
       ```
@@ -90,7 +90,7 @@ cd Internship-19-Cart
    ```
    If you started project with turbo then backend is serving frontend content on the same port on which it is running:
    ```
-   http://localhost:5173/
+   http://localhost:3000/
    ```
    
    Backend Swagger documentation:
