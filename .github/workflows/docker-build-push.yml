@@ -49,3 +49,29 @@ jobs:
           annotations: ${{ steps.meta.outputs.annotations }}
           provenance: true
           sbom: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+    deploy:
+      runs-on: ubuntu-latest
+      needs:
+        - docker_image_build
+
+      steps:
+        - name: Checkout repo
+          uses: actions/checkout@v6
+
+        - name: SSH and deploy
+          uses: appleboy/ssh-action@v0.1.10
+          with:
+            host: ${{ secrets.SSH_HOST }}
+            username: ${{ secrets.SSH_USER }}
+            key: ${{ secrets.SSH_PRIVATE_KEY }}
+            script: |
+              echo "${ {secrets.ENV_FILE }}"> .env
+              sudo docker pull ghcr.io/dorianleci/internship-19-cart:sha-2dab8d4
+              sudo docker stop cart_app || true
+              sudo docker rm cart_app || true
+              sudo docker run -d -p 3000:3000 \
+               --env-file .env --restart always \
+               --name cart_app ghcr.io/dorianleci/internship-19-cart:sha-2dab8d4
