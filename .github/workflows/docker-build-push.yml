@@ -70,7 +70,7 @@ jobs:
           script: |
             echo "${{ secrets.ENV_FILE }}"> .env
 
-            IMAGE="ghcr.io/dorianleci/internship-19-cart:${{ github.sha }}"
+            IMAGE="ghcr.io/dorianleci/internship-19-cart:sha-${{ github.sha }}"
             sudo docker pull $IMAGE
 
             sudo docker stop cart_app || true
