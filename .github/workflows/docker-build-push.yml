@@ -22,6 +22,16 @@ jobs:
         with:
           driver: docker-container
 
+      - name: Extract Docker image metadata
+        id: meta
+        uses: docker/metadata-action@v6
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: |
+            type=sha
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=ref,event=branch
+
       - name: Login to Docker HUB
         uses: docker/login-action@v4
         with:
@@ -35,8 +45,8 @@ jobs:
           context: .
           file: ./services/api/Dockerfile
           push: ${{ github.event_name!='pull_request' }}
-          tags: ghcr.io/${{ github.repository }}:${{ github.sha }},
-            ghcr.io/${{ github.repository }}:${{ github.ref_name }}
+          tags: ${{ steps.meta.outputs.tags }}
+          annotations: ${{ steps.meta.outputs.annotations }}
           provenance: true
           sbom: true
           cache-from: type=gha
@@ -60,7 +70,7 @@ jobs:
           script: |
             echo "${{ secrets.ENV_FILE }}"> .env
 
-            IMAGE="ghcr.io/dorianleci/internship-19-cart:{ github.sha }}"
+            IMAGE="ghcr.io/dorianleci/internship-19-cart:latest"
             sudo docker pull $IMAGE
 
             sudo docker stop cart_app || true
