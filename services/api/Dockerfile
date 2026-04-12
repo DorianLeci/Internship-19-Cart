@@ -7,15 +7,20 @@ RUN apt-get update -y && apt-get install -y openssl
 COPY package*.json ./
 COPY packages/types/ ./packages/types/
 COPY services/api/package*.json ./services/api/
+COPY services/web/package*.json ./services/web/
 
 RUN npm install
 
 COPY services/api ./services/api
+COPY services/web ./services/web
 
 WORKDIR /app/services/api
 RUN npx prisma generate
+
 WORKDIR /app
-RUN npm run build --workspace=packages/types && npm run build --workspace=services/api
+RUN npm run build --workspace=packages/types \
+&& npm run build --workspace=services/api \
+&& npm run build --workspace=services/web
 
 FROM node:20-slim AS production
 
@@ -28,8 +33,10 @@ COPY --from=builder /app/services/api/package.json ./services/api/
 
 RUN npm ci --omit=dev
 
+COPY --from=builder /app/services/web/dist ./services/web/dist
 COPY --from=builder /app/services/api/dist ./services/api/dist
 COPY --from=builder /app/packages/types/dist ./packages/types/dist
+
 COPY --from=builder /app/services/api/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/services/api/prisma ./services/api/prisma
 
