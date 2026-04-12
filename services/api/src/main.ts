@@ -40,7 +40,13 @@ async function bootstrap() {
     preflightContinue: false,
   });
 
-  app.use(helmet());
+  app.use(
+    helmet.contentSecurityPolicy({
+      directives: {
+        upgradeInsecureRequests: null,
+      },
+    }),
+  );
 
   app.useGlobalPipes(
     new TrimPipe(),
