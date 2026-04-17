@@ -13,6 +13,8 @@
 - On order completion order mail is sent to your mail
 ---
 
+#Application is available on http://13.62.53.145 (if you want to use it locally follow the steps below)
+
 ## Requirements
 - Node.js (v18+ recommended)
 - npm (Node Package Manager)
