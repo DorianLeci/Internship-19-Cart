@@ -84,6 +84,16 @@ const ProductOptions = ({
           createNotification(
             `Added ${quantity} x ${productName} (${selectedColor.toLowerCase()}) to cart`,
           );
+
+          (globalThis as any).dataLayer.push({
+            event: "add_to_cart",
+            product_name: productName,
+            color: selectedColor,
+            quantity: quantity,
+            size: selectedVariantObject?.shoeSize
+              ? String(selectedVariantObject?.shoeSize)
+              : selectedVariantObject?.clothingSize,
+          });
         },
       },
     );
