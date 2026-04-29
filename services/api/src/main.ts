@@ -44,6 +44,8 @@ async function bootstrap() {
     helmet.contentSecurityPolicy({
       directives: {
         upgradeInsecureRequests: null,
+        scriptSrc: ['https://www.google-analytics.com', 'https://www.googletagmanager.com'],
+        connectSrc: ['https://www.google-analytics.com', 'https://www.googletagmanager.com'],
       },
     }),
   );
