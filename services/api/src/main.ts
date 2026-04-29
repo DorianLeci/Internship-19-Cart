@@ -45,7 +45,7 @@ async function bootstrap() {
       directives: {
         upgradeInsecureRequests: null,
         scriptSrc: [
-          "'self",
+          "'self'",
           'https://www.google-analytics.com',
           'https://www.googletagmanager.com',
         ],
