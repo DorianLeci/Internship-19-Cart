@@ -6,7 +6,6 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { TrimPipe } from '@pipes/trim.pipe';
-import helmet from 'helmet';
 import { AppModule } from './app.module';
 
 function mapValidationErrors(errors: ValidationError[], parentPath?: string): Record<string, any> {
@@ -40,28 +39,28 @@ async function bootstrap() {
     preflightContinue: false,
   });
 
-  app.use(
-    helmet.contentSecurityPolicy({
-      directives: {
-        upgradeInsecureRequests: null,
-        frameSrc: [
-          "'self'",
-          'https://www.google-analytics.com',
-          'https://www.googletagmanager.com',
-        ],
-        scriptSrc: [
-          "'self'",
-          'https://www.google-analytics.com',
-          'https://www.googletagmanager.com',
-        ],
-        connectSrc: [
-          "'self'",
-          'https://www.google-analytics.com',
-          'https://www.googletagmanager.com',
-        ],
-      },
-    }),
-  );
+  // app.use(
+  //   helmet.contentSecurityPolicy({
+  //     directives: {
+  //       upgradeInsecureRequests: null,
+  //       frameSrc: [
+  //         "'self'",
+  //         'https://www.google-analytics.com',
+  //         'https://www.googletagmanager.com',
+  //       ],
+  //       scriptSrc: [
+  //         "'self'",
+  //         'https://www.google-analytics.com',
+  //         'https://www.googletagmanager.com',
+  //       ],
+  //       connectSrc: [
+  //         "'self'",
+  //         'https://www.google-analytics.com',
+  //         'https://www.googletagmanager.com',
+  //       ],
+  //     },
+  //   }),
+  // );
 
   app.useGlobalPipes(
     new TrimPipe(),
